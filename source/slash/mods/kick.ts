@@ -23,8 +23,8 @@ export const data = new SlashCommandBuilder()
 export const requiredPermission = PermissionFlagsBits.KickMembers;
 
 export const execute = async (interaction: ChatInputCommandInteraction) => {
-    let reason   = interaction.options.getString("motivo") || "Não especificado.";
-    let user     = interaction.options.getUser("usuario") as User;
+    let reason = interaction.options.getString("motivo") || "Não especificado.";
+    let user   = interaction.options.getUser("usuario") as User;
 
     if (user === interaction.user) return interaction.reply(`${RandomPhrase()} o cabo de ${interaction.client.user} antes que você pudesse expulsar a si mesmo!`);
     if (mods[user.id]) return interaction.reply(`Ei, o que você pensa que tá fazendo?`);
@@ -40,7 +40,7 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
         reason,
     });
 
-    if (member) await member?.send({ embeds: [ kickEmbed ] });
+    if (member) await member?.send({ embeds: [ kickEmbed ] }).catch(console.log);
 
     await guild?.members?.kick(user, reason)
     .then(() => {

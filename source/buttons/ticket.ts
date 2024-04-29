@@ -12,7 +12,7 @@ async function createTicket (interaction: ButtonInteraction)
     const thread = await channel.threads.create({
         type: ChannelType.PrivateThread,
         invitable: false,
-        name: `${interaction.user.username} | ${singularName[channel.name] ?? channel.name}`,
+        name: `${interaction.user.username} | ${singularName[channel.name] || channel.name}`,
     });
 
     await thread.members.add(interaction.user);
@@ -24,7 +24,7 @@ async function createTicket (interaction: ButtonInteraction)
 
 async function closeTicket (interaction: ButtonInteraction)
 {
-    interaction.channel
+    interaction.channel?.delete();
 }
 
 export const buttonContext = "ticket";

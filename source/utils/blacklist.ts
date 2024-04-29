@@ -1,13 +1,35 @@
-const blacklistedContent = [
-    "discord.gg",
-    "discord.com/invite"
-]
+import { Message } from "discord.js";
+import { SendLog } from "./logs";
+import { minute } from "./utils";
+import { mods } from "./mods";
 
-export function isBlacklisted (messageContent: string)
+const blacklistedContent = {
+    "discord.com/invite": "Envio de convite de servidor.",
+    "discord.gg":         "Envio de convite de servidor.",
+}
+
+async function MuteMember (message: Message, reason: string)
 {
-    for (const content of blacklistedContent)
+    if (!message.member || !message.member?.kickable) return;
+
+    if (mods[message.member.id]) return message.reply("vc é mod");
+    
+    if (message.deletable) await message.delete();
+    
+    await message.member?.timeout(minute * 10, reason);
+
+    await SendLog(message, `O usuário ${message.member} (${message.member?.id}) foi silenciado **automaticamente** por 10 minutos pelo motivo: **${reason}**`);
+}
+
+export async function isBlacklisted (message: Message)
+{
+    for (const [content, reason] of Object.entries(blacklistedContent))
     {
-        if (messageContent.includes(content)) return true;
+        if (message.content.includes(content))
+        {
+            MuteMember(message, reason);
+            return true;
+        };
     }
 
     return false;

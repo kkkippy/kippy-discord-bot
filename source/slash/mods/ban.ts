@@ -25,8 +25,8 @@ export const data = new SlashCommandBuilder()
 export const requiredPermission = PermissionFlagsBits.BanMembers;
 
 export const execute = async (interaction: ChatInputCommandInteraction) => {
-    let reason   = interaction.options.getString("motivo") || "Não especificado.";
-    let user     = interaction.options.getUser("usuario") as User;
+    let reason = interaction.options.getString("motivo") || "Não especificado.";
+    let user   = interaction.options.getUser("usuario") as User;
 
     if (user === interaction.user) return interaction.reply(`${RandomPhrase()} o cabo de ${interaction.client.user} antes que você pudesse banir você mesmo!`);
     if (mods[user.id]) return interaction.reply(`Ei, o que você pensa que tá fazendo?`);
@@ -43,7 +43,12 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
         reason,
     });
 
-    if (member) await member?.send({ embeds: [ banEmbed ] });
+    if (member) await member?.send({ embeds: [ banEmbed ] }).catch(console.log);
+    /*
+    Imagino que deva causar pânico no código caso o usuário esteja no servidor
+    mas tenha bloqueado o bot, então como forma de prevenir esse pânico,
+    fiz o tratamento do possível erro usando o catch
+    */
 
     await guild?.members?.ban(user, { reason, deleteMessageSeconds: weekInSeconds })
     .then(() => {

@@ -58,7 +58,7 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
         reason,
     });
 
-    await member?.send({ embeds: [ muteEmbed ] });
+    await member?.send({ embeds: [ muteEmbed ] }).catch(console.log);
 
     await member?.timeout(durationAsNumber, reason)
     .then(() => {
