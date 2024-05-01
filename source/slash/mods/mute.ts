@@ -1,9 +1,10 @@
-import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, User } from "discord.js";
+import { ChatInputCommandInteraction, Guild, PermissionFlagsBits, SlashCommandBuilder, User } from "discord.js";
 import { BuildPunishmentEmbed } from "../../utils/buildEmbed";
 import { RandomPhrase } from "../../utils/randomPhrase";
 import { minute, hour, day } from "../../utils/utils";
 import { mods } from "../../utils/mods";
 import { client } from "../../client";
+import { SendPunishmentLog } from "../../utils/logs";
 
 export const data = new SlashCommandBuilder()
 .setName("mute")
@@ -49,11 +50,11 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     let durationAsNumber = Number(duration[1]);
     let durationAsText   = duration[0];
 
-    let guild  = client.guilds.cache.first();
-    let member = guild?.members.cache.get(user?.id as string);
+    let guild  = client.guilds.cache.first() as Guild;
+    let member = guild.members.cache.get(user?.id as string);
 
     let muteEmbed = await BuildPunishmentEmbed({
-        title: `Você foi silenciado em ${guild?.name}.`,
+        title: `Você foi silenciado em ${guild.name}.`,
         punishedBy: interaction.user,
         reason,
     });
@@ -62,7 +63,8 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
 
     await member?.timeout(durationAsNumber, reason)
     .then(() => {
-        interaction.reply(`O membro ${user} (${user?.id}) foi silenciado por ${durationAsText} em ${guild?.name}.`);
+        interaction.reply(`O membro ${user} (${user?.id}) foi silenciado por ${durationAsText} em ${guild.name}.`);
+        SendPunishmentLog(guild, `O membro ${user} foi **silenciado** por **${interaction.user.username}** durante **${durationAsText}** em ${guild.name} pelo motivo: **${reason}**`);
     })
     .catch(e => {
         interaction.reply(`Não foi possível silenciar o membro ${user} (${user?.id}).\n${e}.`);

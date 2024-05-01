@@ -1,5 +1,6 @@
-import { BaseGuildTextChannel, ButtonInteraction, ChannelType } from "discord.js";
+import { TextChannel, ButtonInteraction, ChannelType, ThreadChannel } from "discord.js";
 import { TicketActions } from "../utils/types";
+import { SendTicketLog } from "../utils/logs";
 
 const singularName: { [channelName: string]: string } = {
     "sugestões": "sugestão"
@@ -7,13 +8,15 @@ const singularName: { [channelName: string]: string } = {
 
 async function createTicket (interaction: ButtonInteraction)
 {
-    const channel = interaction.channel as BaseGuildTextChannel;
+    const channel = interaction.channel as TextChannel;
 
     const thread = await channel.threads.create({
         type: ChannelType.PrivateThread,
         invitable: false,
         name: `${interaction.user.username} | ${singularName[channel.name] || channel.name}`,
     });
+
+    SendTicketLog(interaction, "create");
 
     await thread.members.add(interaction.user);
     
@@ -24,7 +27,11 @@ async function createTicket (interaction: ButtonInteraction)
 
 async function closeTicket (interaction: ButtonInteraction)
 {
-    interaction.channel?.delete();
+    const ticket = interaction.channel as ThreadChannel;
+
+    SendTicketLog(interaction, "close");
+
+    ticket.members.cache.forEach(async member => await member.remove());
 }
 
 export const buttonContext = "ticket";

@@ -1,6 +1,7 @@
-import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, User } from "discord.js";
+import { ChatInputCommandInteraction, Guild, PermissionFlagsBits, SlashCommandBuilder, User } from "discord.js";
 import { BuildPunishmentEmbed } from "../../utils/buildEmbed";
 import { RandomPhrase } from "../../utils/randomPhrase";
+import { SendPunishmentLog } from "../../utils/logs";
 import Basil from "../../utils/basilEmotions.json";
 import { weekInSeconds } from "../../utils/utils";
 import { RandomGIF } from "../../utils/banGifs";
@@ -31,11 +32,11 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     if (user === interaction.user) return interaction.reply(`${RandomPhrase()} o cabo de ${interaction.client.user} antes que você pudesse banir você mesmo!`);
     if (mods[user.id]) return interaction.reply(`Ei, o que você pensa que tá fazendo?`);
 
-    let guild  = client.guilds.cache.first();
-    let member = guild?.members.cache.get(user?.id as string);
+    let guild  = client.guilds.cache.first() as Guild;
+    let member = guild.members.cache.get(user?.id as string);
 
     let banEmbed = await BuildPunishmentEmbed({
-        title: `Você foi banido de ${guild?.name}.`,
+        title: `Você foi banido de ${guild.name}.`,
         punishedBy: interaction.user,
         thumbnail: Basil.muito_bravo,
         image: RandomGIF(),
@@ -50,9 +51,10 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     fiz o tratamento do possível erro usando o catch
     */
 
-    await guild?.members?.ban(user, { reason, deleteMessageSeconds: weekInSeconds })
+    await guild.members?.ban(user, { reason, deleteMessageSeconds: weekInSeconds })
     .then(() => {
-        interaction.reply(`O usuário ${user} (${user?.id}) foi banido de ${guild?.name}.`);
+        interaction.reply(`O usuário ${user} (${user?.id}) foi banido de ${guild.name}.`);
+        SendPunishmentLog(guild, `O usuário ${user} foi **banido** de ${guild.name} por **${interaction.user.username}** pelo motivo: **${reason}**`);
     })
     .catch(e => {
         interaction.reply(`Não foi possível banir o usuário ${user} (${user?.id}).\n${e}.`);

@@ -1,7 +1,9 @@
-import { Message } from "discord.js";
-import { SendLog } from "./logs";
+import { Guild, Message, User } from "discord.js";
+import { SendPunishmentLog } from "./logs";
 import { minute } from "./utils";
 import { mods } from "./mods";
+import { BuildPunishmentEmbed } from "./buildEmbed";
+import { client } from "../client";
 
 const blacklistedContent = {
     "discord.com/invite": "Envio de convite de servidor.",
@@ -10,22 +12,30 @@ const blacklistedContent = {
 
 async function MuteMember (message: Message, reason: string)
 {
-    if (!message.member || !message.member?.kickable) return;
+    const member = message.member;
+    if (!member || !member?.kickable) return;
 
-    if (mods[message.member.id]) return message.reply("vc é mod");
+    if (mods[member.id]) return;
     
     if (message.deletable) await message.delete();
     
-    await message.member?.timeout(minute * 10, reason);
+    const muteEmbed = await BuildPunishmentEmbed({
+        title: `Você foi silenciado em ${message.guild?.name}.`,
+        punishedBy: client.user as User,
+        reason,
+    });
 
-    await SendLog(message, `O usuário ${message.member} (${message.member?.id}) foi silenciado **automaticamente** por 10 minutos pelo motivo: **${reason}**`);
+    await member.send({ embeds: [ muteEmbed ] }).catch(console.log);
+    await member?.timeout(minute * 10, reason);
+
+    await SendPunishmentLog(message.guild as Guild, `O usuário ${message.member} (${message.member?.id}) foi silenciado **automaticamente** por 10 minutos pelo motivo: **${reason}**`);
 }
 
 export async function isBlacklisted (message: Message)
 {
     for (const [content, reason] of Object.entries(blacklistedContent))
     {
-        if (message.content.includes(content))
+        if (message.content.toLowerCase().includes(content))
         {
             MuteMember(message, reason);
             return true;

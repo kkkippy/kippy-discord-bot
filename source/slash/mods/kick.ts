@@ -1,6 +1,7 @@
-import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, User } from "discord.js";
+import { ChatInputCommandInteraction, Guild, PermissionFlagsBits, SlashCommandBuilder, User } from "discord.js";
 import { BuildPunishmentEmbed } from "../../utils/buildEmbed";
 import { RandomPhrase } from "../../utils/randomPhrase";
+import { SendPunishmentLog } from "../../utils/logs";
 import Basil from "../../utils/basilEmotions.json";
 import { mods } from "../../utils/mods";
 import { client } from "../../client";
@@ -29,11 +30,11 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     if (user === interaction.user) return interaction.reply(`${RandomPhrase()} o cabo de ${interaction.client.user} antes que você pudesse expulsar a si mesmo!`);
     if (mods[user.id]) return interaction.reply(`Ei, o que você pensa que tá fazendo?`);
 
-    let guild  = client.guilds.cache.first();
-    let member = guild?.members.cache.get(user?.id as string);
+    let guild  = client.guilds.cache.first() as Guild;
+    let member = guild.members.cache.get(user?.id as string);
 
     let kickEmbed = await BuildPunishmentEmbed({
-        title: `Você foi expulso de ${guild?.name}.`,
+        title: `Você foi expulso de ${guild.name}.`,
         punishedBy: interaction.user,
         thumbnail: Basil.mais_nervoso,
         color: 0xcc8658,
@@ -42,9 +43,10 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
 
     if (member) await member?.send({ embeds: [ kickEmbed ] }).catch(console.log);
 
-    await guild?.members?.kick(user, reason)
+    await guild.members?.kick(user, reason)
     .then(() => {
-        interaction.reply(`O usuário ${user} (${user?.id}) foi expulso de ${guild?.name}.`);
+        interaction.reply(`O usuário ${user} (${user?.id}) foi expulso de ${guild.name}.`);
+        SendPunishmentLog(guild, `O usuário ${user} foi **expulso** de ${guild.name} por **${interaction.user.username}** pelo motivo: **${reason}**`);
     })
     .catch(e => {
         interaction.reply(`Não foi possível expulsar o usuário ${user} (${user?.id}).\n${e}.`);

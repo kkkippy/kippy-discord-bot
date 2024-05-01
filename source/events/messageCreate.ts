@@ -6,3 +6,4 @@ export const eventName = Events.MessageCreate;
 export const execute = async (message: Message) => {
 	if (!isBlacklisted(message)) return;
 }
+
