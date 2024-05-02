@@ -12,7 +12,6 @@ Ao clonar este repositório, certifique-se de criar um arquivo `config.json` com
 {
     "token": "Token do seu bot",
     "clientId": "ID do seu bot",
-    "mongooseUri": "URI da sua database do MongoDB"
 }
 ```
 

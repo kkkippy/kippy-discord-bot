@@ -1,9 +1,39 @@
-import { EmbedBuilder, ChatInputCommandInteraction } from "discord.js";
-import { PunishmentEmbedOptions, TickedEmbedOptions } from "./types";
+import { CloseTicketEmbedOptions, CreateTicketEmbedOptions, PunishmentEmbedOptions } from "./types";
+import { EmbedBuilder, ChatInputCommandInteraction, ButtonBuilder, ButtonStyle } from "discord.js";
 import Basil from "./basilEmotions.json";
 
-export const BuildSuggestionTicketEmbed = async (interaction: ChatInputCommandInteraction) => {
-    const suggestionEmbed = await BuildTicketEmbed({
+export const BuildCloseSuggestionTicketEmbed = async (interaction: ChatInputCommandInteraction) => {
+	const suggestionEmbed = BuildCloseTicketEmbed({
+		color: 0xcccccc,
+		image: "",
+		fields: [
+			{
+				name: "",
+				value: ""
+			}
+		]
+	});
+
+	return suggestionEmbed;
+}
+
+export const BuildCloseSupportTicketEmbed = async (interaction: ChatInputCommandInteraction) => {
+	const supportEmbed = BuildCloseTicketEmbed({
+		color: 0xcccccc,
+		image: "",
+		fields: [
+			{
+				name: "",
+				value: ""
+			}
+		]
+	});
+
+	return supportEmbed;
+}
+
+export const BuildCreateSuggestionTicketEmbed = async (interaction: ChatInputCommandInteraction) => {
+    const suggestionEmbed = await BuildCreateTicketEmbed({
         fields: [
             {
                 name: "Quer fazer uma sugestão?",
@@ -22,8 +52,8 @@ export const BuildSuggestionTicketEmbed = async (interaction: ChatInputCommandIn
     return suggestionEmbed;
 }
 
-export const BuildSupportTicketEmbed = async (interaction: ChatInputCommandInteraction) => {
-    const supportEmbed = await BuildTicketEmbed({
+export const BuildCreateSupportTicketEmbed = async (interaction: ChatInputCommandInteraction) => {
+    const supportEmbed = await BuildCreateTicketEmbed({
         fields: [
             {
                 name: "Quer obter suporte?",
@@ -42,18 +72,34 @@ export const BuildSupportTicketEmbed = async (interaction: ChatInputCommandInter
     return supportEmbed;
 }
 
-export const BuildTicketEmbed = async (options: TickedEmbedOptions) => {
-	const ticketEmbed = new EmbedBuilder()
+export const BuildCloseTicketEmbed = async (options: CloseTicketEmbedOptions) => {
+	const closeTicketEmbed = new EmbedBuilder()
+	.setTitle(`Aguarde um pouco...`)
+	.setFields(options.fields)
+	.setColor(options.color)
+	.setImage(options.image);
+
+	const closeButton = new ButtonBuilder()
+	.setStyle(ButtonStyle.Danger)
+	.setCustomId("ticket:close")
+	.setLabel("Fechar ticket");
+
+	return closeTicketEmbed;
+}
+
+export const BuildCreateTicketEmbed = async (options: CreateTicketEmbedOptions) => {
+	const createTicketEmbed = new EmbedBuilder()
 	.setTitle(`Olá, sejam bem-vindos(as) ao sistema de tickets da comunidade ${options.guildName}!`)
 	.setFields(options.fields)
 	.setColor(options.color)
 	.setImage(options.image)
 
-	if (options.description) ticketEmbed.setDescription(options.description);
+	if (options.description) createTicketEmbed.setDescription(options.description);
 
-	return ticketEmbed;
+	return createTicketEmbed;
 }
 
+// Punishment
 export const BuildPunishmentEmbed = async (options: PunishmentEmbedOptions) => {
     const punishmentEmbed = new EmbedBuilder()
 	.setThumbnail(options.thumbnail || Basil.preocupado)

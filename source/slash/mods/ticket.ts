@@ -1,10 +1,10 @@
-import { ActionRowBuilder, BaseGuildTextChannel, ButtonBuilder, ButtonStyle, CategoryChannel, CategoryChannelChildManager, ChannelType, ChatInputCommandInteraction, EmbedBuilder, GuildBasedChannel, GuildTextBasedChannel, PermissionFlagsBits, SlashCommandBuilder, TextBasedChannel, TextChannel } from "discord.js";
-import { BuildSuggestionTicketEmbed, BuildSupportTicketEmbed } from "../../utils/buildEmbed";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CategoryChannel, ChannelType, ChatInputCommandInteraction, EmbedBuilder, PermissionFlagsBits, SlashCommandBuilder, TextChannel } from "discord.js";
+import { BuildCreateSupportTicketEmbed, BuildCreateSuggestionTicketEmbed } from "../../utils/buildEmbed";
 
 async function getCorrespondingEmbed (interaction: ChatInputCommandInteraction, channel: TextChannel)
 {
-    if (channel.name === "sugestões") return await BuildSuggestionTicketEmbed(interaction);
-    if (channel.name === "suporte") return await BuildSupportTicketEmbed(interaction);
+    if (channel.name === "sugestões") return await BuildCreateSuggestionTicketEmbed(interaction);
+    if (channel.name === "suporte") return await BuildCreateSupportTicketEmbed(interaction);
 
     return new EmbedBuilder()
     .setTitle("Algo deu errado...");
