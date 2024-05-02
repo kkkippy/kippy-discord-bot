@@ -40,20 +40,20 @@ export const data = new SlashCommandBuilder()
 export const requiredPermission = PermissionFlagsBits.MuteMembers;
 
 export const execute = async (interaction: ChatInputCommandInteraction) => {
-    let duration = (interaction.options.getString("duracao") as string).split(":");
-    let reason   = interaction.options.getString("motivo") || "Não especificado.";
-    let user     = interaction.options.getUser("usuario") as User;
+    const duration = (interaction.options.getString("duracao") as string).split(":");
+    const reason   = interaction.options.getString("motivo") || "Não especificado.";
+    const user     = interaction.options.getUser("usuario") as User;
 
     if (user === interaction.user) return interaction.reply(`${RandomPhrase()} o cabo de ${interaction.client.user} antes que você pudesse se autossilenciar!`);
     if (mods[user.id]) return interaction.reply(`Ei, o que você pensa que tá fazendo?`);
 
-    let durationAsNumber = Number(duration[1]);
-    let durationAsText   = duration[0];
+    const durationAsNumber = Number(duration[1]);
+    const durationAsText   = duration[0];
 
-    let guild  = client.guilds.cache.first() as Guild;
-    let member = guild.members.cache.get(user?.id as string);
+    const guild  = client.guilds.cache.first() as Guild;
+    const member = guild.members.cache.get(user?.id as string);
 
-    let muteEmbed = await BuildPunishmentEmbed({
+    const muteEmbed = await BuildPunishmentEmbed({
         title: `Você foi silenciado em ${guild.name}.`,
         punishedBy: interaction.user,
         reason,

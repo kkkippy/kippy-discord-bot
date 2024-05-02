@@ -20,13 +20,13 @@ export const data = new SlashCommandBuilder()
 export const requiredPermission = PermissionFlagsBits.BanMembers;
 
 export const execute = async (interaction: ChatInputCommandInteraction) => {
-    let reason = interaction.options.getString("motivo") || "Não especificado.";
-    let user   = interaction.options.getUser("usuario") as User;
+    const reason = interaction.options.getString("motivo") || "Não especificado.";
+    const user   = interaction.options.getUser("usuario") as User;
 
     if (user === interaction.user) return interaction.reply(`Não faz sentido desbanir a si mesmo, você já está no servidor!!`);
     if (mods[user.id]) return interaction.reply(`Por que desbanir o coleguinha de trabalho? <:thonk:1216077822242852996>`);
 
-    let guild  = client.guilds.cache.first();
+    const guild  = client.guilds.cache.first();
 
     await guild?.members?.unban(user, reason)
     .then(() => {

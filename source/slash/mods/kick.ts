@@ -24,16 +24,16 @@ export const data = new SlashCommandBuilder()
 export const requiredPermission = PermissionFlagsBits.KickMembers;
 
 export const execute = async (interaction: ChatInputCommandInteraction) => {
-    let reason = interaction.options.getString("motivo") || "Não especificado.";
-    let user   = interaction.options.getUser("usuario") as User;
+    const reason = interaction.options.getString("motivo") || "Não especificado.";
+    const user   = interaction.options.getUser("usuario") as User;
 
     if (user === interaction.user) return interaction.reply(`${RandomPhrase()} o cabo de ${interaction.client.user} antes que você pudesse expulsar a si mesmo!`);
     if (mods[user.id]) return interaction.reply(`Ei, o que você pensa que tá fazendo?`);
 
-    let guild  = client.guilds.cache.first() as Guild;
-    let member = guild.members.cache.get(user?.id as string);
+    const guild  = client.guilds.cache.first() as Guild;
+    const member = guild.members.cache.get(user?.id as string);
 
-    let kickEmbed = await BuildPunishmentEmbed({
+    const kickEmbed = await BuildPunishmentEmbed({
         title: `Você foi expulso de ${guild.name}.`,
         punishedBy: interaction.user,
         thumbnail: Basil.mais_nervoso,
