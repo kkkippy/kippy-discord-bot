@@ -1,6 +1,6 @@
-import { REST, Routes } from "discord.js";
-import { clientId, token } from "./config.json";
 import { slashCommands } from "./handlers/slash";
+import { clientId, token } from "./config.json";
+import { REST, Routes } from "discord.js";
 
 export const deployCommands = async () => {
 	const rest = new REST().setToken(token);

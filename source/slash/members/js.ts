@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, GuildEmoji, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
 export const data = new SlashCommandBuilder()
 .setName("js")

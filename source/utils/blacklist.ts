@@ -1,8 +1,8 @@
+import { BuildPunishmentEmbed } from "./buildEmbed";
 import { Guild, Message, User } from "discord.js";
 import { SendPunishmentLog } from "./logs";
 import { minute } from "./utils";
 import { mods } from "./mods";
-import { BuildPunishmentEmbed } from "./buildEmbed";
 import { client } from "../client";
 
 const blacklistedContent = {

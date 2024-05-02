@@ -2,9 +2,9 @@ import { ChatInputCommandInteraction, Guild, PermissionFlagsBits, SlashCommandBu
 import { BuildPunishmentEmbed } from "../../utils/buildEmbed";
 import { RandomPhrase } from "../../utils/randomPhrase";
 import { minute, hour, day } from "../../utils/utils";
+import { SendPunishmentLog } from "../../utils/logs";
 import { mods } from "../../utils/mods";
 import { client } from "../../client";
-import { SendPunishmentLog } from "../../utils/logs";
 
 export const data = new SlashCommandBuilder()
 .setName("mute")

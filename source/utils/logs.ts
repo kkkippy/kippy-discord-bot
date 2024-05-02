@@ -1,4 +1,4 @@
-import { ButtonInteraction, ChatInputCommandInteraction, Guild, GuildMember, Message, TextChannel, ThreadChannel } from "discord.js";
+import { ButtonInteraction, Guild, GuildMember, TextChannel, ThreadChannel } from "discord.js";
 import { TicketActions } from "./types";
 
 const punishmentLogChannelId   = "1230843907114532866";

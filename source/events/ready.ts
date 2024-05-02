@@ -8,7 +8,7 @@ async function Purge (guild: Guild) {
 	(await GetAllUsers()).forEach(async (user: MUser) => {
 		const member = await guild.members.fetch({
 			user: user.id.toString()
-		})
+		});
 
 		if (!member) return;
 
