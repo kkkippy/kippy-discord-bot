@@ -10,8 +10,9 @@ Para instalar as dependências utilizadas pelo bot, basta executar `npm i` na pa
 Ao clonar este repositório, certifique-se de criar um arquivo `config.json` com as seguintes entradas:
 ```json
 {
-    "token": "token do seu bot",
-    "clientId": "id do seu bot"
+    "token": "Token do seu bot",
+    "clientId": "ID do seu bot",
+    "mongooseUri": "URI da sua database do MongoDB"
 }
 ```
 
