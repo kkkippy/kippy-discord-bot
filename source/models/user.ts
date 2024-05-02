@@ -1,11 +1,9 @@
-import { model, Schema, Types } from "mongoose";
+import { Document, model, Schema } from "mongoose";
 
-export interface MUser
+export interface MUser extends Document
 {
     id: bigint;
-
-    ticketHistory: Types.ObjectId[];
-    currentTicket: Types.ObjectId;
+    currentTicket: string;
 }
 
 const UserSchema = new Schema<MUser>({
@@ -14,13 +12,8 @@ const UserSchema = new Schema<MUser>({
         type: BigInt,
     },
 
-    ticketHistory: { // Array de tickets já abertos
-        type: [Schema.Types.ObjectId],
-        ref: "tickets",
-    },
-
-    currentTicket: { // Propriedade que armazena o ticket já aberto; null caso não tenha um ticket aberto
-        type: Schema.Types.ObjectId,
+    currentTicket: { // Propriedade que armazena o ID do ticket já aberto; null caso não tenha um ticket aberto
+        type: String,
         default: null,
     },
 })

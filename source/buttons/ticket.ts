@@ -13,7 +13,7 @@ async function createTicket (interaction: ButtonInteraction)
     const thread = await channel.threads.create({
         type: ChannelType.PrivateThread,
         invitable: false,
-        name: `${interaction.user.username} | ${singularName[channel.name] || channel.name}`,
+        name: `${interaction.user.id} | ${singularName[channel.name] || channel.name}`,
     });
 
     SendTicketLog(interaction, "create");
