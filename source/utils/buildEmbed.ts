@@ -6,10 +6,15 @@ export const BuildCloseSuggestionTicketEmbed = async () => {
 	const suggestionEmbed = BuildCloseTicketEmbed({
 		color: 0x6a0eff,
 		image: "https://media.discordapp.net/attachments/1172662617354010695/1197939799173103808/te_atenderemos_em_breve_sugestoes.gif",
+		description: "Por favor, nos diga qual é o motivo deste ticket e forneça as informações necessárias para que possamos te auxiliar da melhor forma possível.",
 		fields: [
 			{
-				name: "a",
-				value: "a"
+				name: "Até que você seja atendido,",
+				value: "conte-nos o assunto, a sua opinião e a sua sugestão de melhoria."
+			},
+			{
+				name: "Toda opinião é bem-vinda.",
+				value: "Agradecemos a você por oportunidades assim!\n\nEstamos aqui para te ajudar!"
 			}
 		]
 	});
@@ -21,6 +26,7 @@ export const BuildCloseSupportTicketEmbed = async () => {
 	const supportEmbed = BuildCloseTicketEmbed({
 		color: 0xcccccc,
 		image: "https://media.discordapp.net/attachments/1172662617354010695/1197939798753677312/te_atenderemos_em_breve_suporte.gif",
+		
 		description: "Por favor, nos diga qual é o motivo deste ticket e forneça as informações necessárias para que possamos te auxiliar da melhor forma possível.",
 		fields: [
 			{

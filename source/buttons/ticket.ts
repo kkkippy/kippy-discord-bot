@@ -32,7 +32,7 @@ async function createTicket (interaction: ButtonInteraction)
     const thread = await channel.threads.create({
         type: ChannelType.PrivateThread,
         invitable: false,
-        name: `${interaction.user.username} | ${ticketCategory}`,
+        name: `${interaction.user.id} | ${ticketCategory}`,
     });
 
     ticketCache.set(interaction.user.id, thread);

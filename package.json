@@ -3,7 +3,6 @@
     "@types/node": "^20.12.7",
     "@types/sqlite3": "^3.1.11",
     "discord.js": "^14.14.1",
-    "sqlite3": "^5.1.7",
     "tsx": "^4.7.2"
   },
   "devDependencies": {
