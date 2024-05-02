@@ -5,7 +5,7 @@ import Basil from "./basilEmotions.json";
 export const BuildCloseSuggestionTicketEmbed = async () => {
 	const suggestionEmbed = BuildCloseTicketEmbed({
 		color: 0x6a0eff,
-		image: "https://media.discordapp.net/attachments/1172662617354010695/1197939799173103808/te_atenderemos_em_breve_sugestoes.gif?ex=66346720&is=663315a0&hm=d33c2fde25732ed9a58ebe48c8444043a0e13ac91ad031cbb03233bb5d61da1d&=&width=960&height=480",
+		image: "https://media.discordapp.net/attachments/1172662617354010695/1197939799173103808/te_atenderemos_em_breve_sugestoes.gif",
 		fields: [
 			{
 				name: "a",
@@ -21,12 +21,17 @@ export const BuildCloseSupportTicketEmbed = async () => {
 	const supportEmbed = BuildCloseTicketEmbed({
 		color: 0xcccccc,
 		image: "https://media.discordapp.net/attachments/1172662617354010695/1197939798753677312/te_atenderemos_em_breve_suporte.gif",
+		description: "Por favor, nos diga qual é o motivo deste ticket e forneça as informações necessárias para que possamos te auxiliar da melhor forma possível.",
 		fields: [
 			{
-				name: "a",
-				value: "a"
+				name: "Se for uma denúncia,",
+				value: "por favor, informe o motivo da denúncia, as provas e o ID do usuário a ser denunciado."
+			},
+			{
+				name: "Se for uma dúvida,",
+				value: "conte-nos sobre o assunto e debateremos sobre ele juntos.\n\nEstamos aqui para te ajudar!"
 			}
-		]
+		],
 	});
 
 	return supportEmbed;
@@ -77,7 +82,9 @@ export const BuildCloseTicketEmbed = async (options: CloseTicketEmbedOptions) =>
 	.setTitle(`Aguarde um pouco...`)
 	.setFields(options.fields)
 	.setColor(options.color)
-	.setImage(options.image);
+	.setImage(options.image)
+	
+	if (options.description) closeTicketEmbed.setDescription(options.description);
 
 	return closeTicketEmbed;
 }

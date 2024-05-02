@@ -1,4 +1,4 @@
-import { ButtonInteraction, Guild, GuildMember, TextChannel, ThreadChannel } from "discord.js";
+import { ButtonInteraction, ChatInputCommandInteraction, Guild, GuildMember, TextChannel, ThreadChannel } from "discord.js";
 import { TicketActions } from "./types";
 
 const punishmentLogChannelId   = "1230843907114532866";
@@ -21,7 +21,7 @@ export const SendPunishmentLog = async (guild: Guild, reason: string) => {
     if (punishmentLogChannel) punishmentLogChannel.send(reason);
 }
 
-export const SendTicketLog = (interaction: ButtonInteraction, action: TicketActions) => {
+export const SendTicketLog = (interaction: ButtonInteraction | ChatInputCommandInteraction, action: TicketActions, customMessage?: string) => {
     const guild = interaction.guild;
     
     const ticketChannel = interaction.channel as ThreadChannel;
@@ -30,5 +30,5 @@ export const SendTicketLog = (interaction: ButtonInteraction, action: TicketActi
 
     const ticketLogChannel = guild?.channels.cache.get(options.logChannelId) as TextChannel;
 
-    ticketLogChannel.send(options.build(interaction.member as GuildMember, ticketChannel));
+    ticketLogChannel.send(customMessage || options.build(interaction.member as GuildMember, ticketChannel));
 }

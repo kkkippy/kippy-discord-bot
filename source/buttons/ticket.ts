@@ -17,7 +17,7 @@ const singularName: { [channelName: string]: string } = {
     "sugestões": "sugestão"
 }
 
-const ticketCache = new Map<string, ThreadChannel>();
+export const ticketCache = new Map<string, ThreadChannel>();
 
 async function createTicket (interaction: ButtonInteraction)
 {
@@ -58,7 +58,7 @@ async function createTicket (interaction: ButtonInteraction)
 
 async function closeTicket (interaction: ButtonInteraction)
 {
-    if (!ticketCache.get(interaction.user.id)) return await interaction.reply({ content: `Você não possui um ticket para fechar.`, ephemeral: true });
+    if (!ticketCache.has(interaction.user.id)) return await interaction.reply({ content: `Você não possui um ticket para fechar.`, ephemeral: true });
 
     ticketCache.delete(interaction.user.id);
 
@@ -71,7 +71,6 @@ async function closeTicket (interaction: ButtonInteraction)
     
         ticket.members.cache.forEach(async member => await member.remove());
     }, second * 10);
-
 }
 
 export const buttonContext = "ticket";
