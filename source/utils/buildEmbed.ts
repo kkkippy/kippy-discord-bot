@@ -1,15 +1,15 @@
 import { CloseTicketEmbedOptions, CreateTicketEmbedOptions, PunishmentEmbedOptions } from "./types";
-import { EmbedBuilder, ChatInputCommandInteraction, ButtonBuilder, ButtonStyle } from "discord.js";
+import { EmbedBuilder, ChatInputCommandInteraction, ButtonBuilder, ButtonStyle, ActionRow, ActionRowBuilder } from "discord.js";
 import Basil from "./basilEmotions.json";
 
-export const BuildCloseSuggestionTicketEmbed = async (interaction: ChatInputCommandInteraction) => {
+export const BuildCloseSuggestionTicketEmbed = async () => {
 	const suggestionEmbed = BuildCloseTicketEmbed({
-		color: 0xcccccc,
-		image: "",
+		color: 0x6a0eff,
+		image: "https://media.discordapp.net/attachments/1172662617354010695/1197939799173103808/te_atenderemos_em_breve_sugestoes.gif?ex=66346720&is=663315a0&hm=d33c2fde25732ed9a58ebe48c8444043a0e13ac91ad031cbb03233bb5d61da1d&=&width=960&height=480",
 		fields: [
 			{
-				name: "",
-				value: ""
+				name: "a",
+				value: "a"
 			}
 		]
 	});
@@ -17,14 +17,14 @@ export const BuildCloseSuggestionTicketEmbed = async (interaction: ChatInputComm
 	return suggestionEmbed;
 }
 
-export const BuildCloseSupportTicketEmbed = async (interaction: ChatInputCommandInteraction) => {
+export const BuildCloseSupportTicketEmbed = async () => {
 	const supportEmbed = BuildCloseTicketEmbed({
 		color: 0xcccccc,
-		image: "",
+		image: "https://media.discordapp.net/attachments/1172662617354010695/1197939798753677312/te_atenderemos_em_breve_suporte.gif",
 		fields: [
 			{
-				name: "",
-				value: ""
+				name: "a",
+				value: "a"
 			}
 		]
 	});
@@ -78,11 +78,6 @@ export const BuildCloseTicketEmbed = async (options: CloseTicketEmbedOptions) =>
 	.setFields(options.fields)
 	.setColor(options.color)
 	.setImage(options.image);
-
-	const closeButton = new ButtonBuilder()
-	.setStyle(ButtonStyle.Danger)
-	.setCustomId("ticket:close")
-	.setLabel("Fechar ticket");
 
 	return closeTicketEmbed;
 }

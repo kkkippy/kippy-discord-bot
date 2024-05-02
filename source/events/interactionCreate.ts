@@ -1,6 +1,5 @@
 import { ChatInputCommandInteraction, Events } from "discord.js";
 import { slashCommands } from "../handlers/slash";
-import { RegisterUser } from "../mongoose";
 import { mods } from "../utils/mods";
 import { client } from "../client";
 
@@ -24,8 +23,6 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
 		) 
 		&& slashCommand.requiredPermission                          	  // e o comando exigir permissão para ser executado
 	) return interaction.reply("Você não tem permissão para usar este comando.");
-
-	if (interaction.member)	await RegisterUser(interaction.user);
 
 	return slashCommand.execute(interaction);
 }

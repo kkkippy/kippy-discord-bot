@@ -1,7 +1,17 @@
-import { TextChannel, ButtonInteraction, ChannelType, ThreadChannel } from "discord.js";
+import { TextChannel, ButtonInteraction, ChannelType, ThreadChannel, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } from "discord.js";
+import { BuildCloseSuggestionTicketEmbed, BuildCloseSupportTicketEmbed } from "../utils/buildEmbed";
 import { TicketActions } from "../utils/types";
 import { SendTicketLog } from "../utils/logs";
 import { second } from "../utils/utils";
+
+async function getCorrespondingEmbed (channel: TextChannel)
+{
+    if (channel.name === "sugestões") return await BuildCloseSuggestionTicketEmbed();
+    if (channel.name === "suporte") return await BuildCloseSupportTicketEmbed();
+
+    return new EmbedBuilder()
+    .setTitle("Algo deu errado...");
+}
 
 const singularName: { [channelName: string]: string } = {
     "sugestões": "sugestão"
@@ -12,15 +22,17 @@ const ticketCache = new Map<string, ThreadChannel>();
 async function createTicket (interaction: ButtonInteraction)
 {
     const currentTicket = ticketCache.get(interaction.user.id);
-
+    
     if (currentTicket) return interaction.reply({ content: `Você já possui um ticket em ${currentTicket}`, ephemeral: true });
-
+    
     const channel = interaction.channel as TextChannel;
+
+    const ticketCategory = singularName[channel.name] || channel.name;
 
     const thread = await channel.threads.create({
         type: ChannelType.PrivateThread,
         invitable: false,
-        name: `${interaction.user.id} | ${singularName[channel.name] || channel.name}`,
+        name: `${interaction.user.username} | ${ticketCategory}`,
     });
 
     ticketCache.set(interaction.user.id, thread);
@@ -28,7 +40,18 @@ async function createTicket (interaction: ButtonInteraction)
     SendTicketLog(interaction, "create");
 
     await thread.members.add(interaction.user);
-    thread.send({ embeds: [  ] });
+
+    const closeTicketEmbed = await getCorrespondingEmbed(channel);
+
+    const closeButton = new ButtonBuilder()
+	.setStyle(ButtonStyle.Danger)
+	.setCustomId("ticket:close")
+	.setLabel("Fechar ticket");
+
+	const row = new ActionRowBuilder<ButtonBuilder>()
+	.setComponents(closeButton);
+
+    thread.send({ content: "<@&1178324960603807795>", embeds: [ closeTicketEmbed ], components: [ row ] });
     
     await interaction.reply({ content: `Ticket criado em ${thread}.`, ephemeral: true });
 }
