@@ -3,6 +3,7 @@ import { BuildCloseSuggestionTicketEmbed, BuildCloseSupportTicketEmbed } from ".
 import { TicketActions } from "../utils/types";
 import { SendTicketLog } from "../utils/logs";
 import { second } from "../utils/utils";
+import { mods } from "../utils/mods";
 
 async function getCorrespondingEmbed (channel: TextChannel)
 {
@@ -58,18 +59,21 @@ async function createTicket (interaction: ButtonInteraction)
 
 async function closeTicket (interaction: ButtonInteraction)
 {
-    if (!ticketCache.has(interaction.user.id)) return await interaction.reply({ content: `Você não possui um ticket para fechar.`, ephemeral: true });
+    if (!ticketCache.has(interaction.user.id) && !mods[interaction.user.id]) return await interaction.reply({ content: `Você não possui um ticket para fechar.`, ephemeral: true });
 
     ticketCache.delete(interaction.user.id);
 
     const ticket = interaction.channel as ThreadChannel;
 
-    interaction.reply(`${interaction.user}, seu ticket será fechado em 10 segundos.`);
+    interaction.reply(`${interaction.user}, este ticket será fechado em 10 segundos.`).catch(console.log);
 
     setTimeout(() => {
         SendTicketLog(interaction, "close");
     
-        ticket.members.cache.forEach(async member => await member.remove());
+        ticket.members.cache.forEach(member => {
+            if (ticketCache.has(member.id)) ticketCache.delete(member.id);
+            member.remove().catch(console.log);
+        });
     }, second * 10);
 }
 

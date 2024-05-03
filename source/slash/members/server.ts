@@ -6,5 +6,5 @@ export const data = new SlashCommandBuilder()
 .setDMPermission(false);
 
 export const execute = async (interaction: ChatInputCommandInteraction) => {
-    await interaction.reply("...");
+    await interaction.reply(`O servidor possui **${interaction.guild?.memberCount}** membros.`);
 }
