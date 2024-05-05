@@ -20,9 +20,15 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
 			!member                                                       // Se não possuir o objeto membro,
 			|| !mods[member.id]                                           // ou não estiver na lista de moderadores/administradores,
 			|| !mods[member.id].includes(slashCommand.requiredPermission) // ou não possuir a permissão necessária para executar o comando,
-		) 
+		)
 		&& slashCommand.requiredPermission                          	  // e o comando exigir permissão para ser executado
 	) return interaction.reply("Você não tem permissão para usar este comando.");
 
-	return slashCommand.execute(interaction);
+	return slashCommand.execute(interaction)
+	.catch(async e => {
+		if (interaction.deferred || interaction.replied)
+		{
+			await interaction.followUp({ content: `Ocorreu um erro ao executar este comando: ${e}` });
+		}
+	});
 }
