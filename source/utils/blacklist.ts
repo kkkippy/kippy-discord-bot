@@ -7,7 +7,8 @@ import { mods } from "./mods";
 
 const blacklistedHosts = [
 	"pornhub.com",
-	"xvideos.com"
+	"xvideos.com",
+    "rule34.xxx"
 ];
 
 const whitelistedInvites = [
