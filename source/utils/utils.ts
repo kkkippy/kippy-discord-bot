@@ -5,7 +5,7 @@ export const day 				= hour * 24;
 export const weekInSeconds      = (60 ** 2) * 24 * 7;
 export const weekInMilliseconds = weekInSeconds * 1000;
 
-const urlPattern = /(https?:\/\/)?[\w-]+\.[^\s]+/g;
+const urlPattern = /(https?:\/\/)?[\w-]+\.[^"\s<>#%{}|\\^~[\]`]+/g;
 
 type URLSet = Set<URL>;
 
@@ -26,7 +26,13 @@ export const getUrls = (text: string): URLSet => {
 
         console.log("URL obtida:", url);
         
-        urlSet.add(new URL(url));
+        try
+        {
+            urlSet.add(new URL(url));
+        } catch (e)
+        {
+            console.log(`A URL ${url} não foi adicionada.\n${e}.`);
+        }
     }
 
     return urlSet;
