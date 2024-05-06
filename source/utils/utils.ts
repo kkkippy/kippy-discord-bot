@@ -5,14 +5,16 @@ export const day 				= hour * 24;
 export const weekInSeconds      = (60 ** 2) * 24 * 7;
 export const weekInMilliseconds = weekInSeconds * 1000;
 
-const urlPattern = /(https?:\/\/)?[\w-]+\.[\w-]+[^ ]*/g;
+const urlPattern = /(https?:\/\/)?[\w-]+\.[^\s]+/g;
 
 type URLSet = Set<URL>;
 
 export const hasUrl = (text: string) => urlPattern.test(text);
 
 export const getUrls = (text: string): URLSet => {
-    const matchedUrls = encodeURI(text).match(urlPattern) as RegExpMatchArray;
+    const matchedUrls = (text.match(urlPattern) as RegExpMatchArray).map(url => encodeURI(url));
+
+    console.log(matchedUrls);
 
     const urlSet = new Set<URL>();
 
