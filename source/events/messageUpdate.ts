@@ -3,6 +3,6 @@ import { Events, Message } from "discord.js";
 
 export const eventName = Events.MessageUpdate;
 
-export const execute = async (message: Message) => {
-	if (isBlacklisted(message)) return await moderateMessage(message, "Envio de mensagem blacklisted.");
+export const execute = async (oldMessage: Message, newMessage: Message) => {
+	if (isBlacklisted(newMessage)) return await moderateMessage(newMessage, "Envio de mensagem blacklisted.");
 }
