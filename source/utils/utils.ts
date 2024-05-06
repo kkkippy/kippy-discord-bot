@@ -7,18 +7,25 @@ export const weekInMilliseconds = weekInSeconds * 1000;
 
 const urlPattern = /(https?:\/\/)?[\w-]+\.[\w-]+[^ ]*/g;
 
+type URLSet = Set<URL>;
+
 export const hasUrl = (text: string) => urlPattern.test(text);
 
-export const forEachUrl = (text: string, callback: (url: URL) => void) => {
-    const matchedUrls = encodeURI(text).match(urlPattern);
-    
-    if (!matchedUrls) return;
+export const getUrls = (text: string): URLSet => {
+    const matchedUrls = encodeURI(text).match(urlPattern) as RegExpMatchArray;
 
-    for (let url of matchedUrls)
+    const urlSet = new Set<URL>();
+
+    for (let urlIndex in matchedUrls)
     {
-        if (!url.startsWith("http") && !url.startsWith("https")) url = "https://" + url;
+        let url = matchedUrls[urlIndex];
 
-        const encodedUrl = new URL(url);
-        callback(encodedUrl);
+        if (!url.startsWith("http")) url = "https://" + url;
+
+        console.log("URL obtida:", url);
+        
+        urlSet.add(new URL(url));
     }
+
+    return urlSet;
 }
