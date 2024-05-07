@@ -14,8 +14,6 @@ export const hasUrl = (text: string) => urlPattern.test(text);
 export const getUrls = (text: string): URLSet => {
     const matchedUrls = (text.match(urlPattern) as RegExpMatchArray).map(url => encodeURI(url));
 
-    console.log(matchedUrls);
-
     const urlSet = new Set<URL>();
 
     for (let urlIndex in matchedUrls)
@@ -24,8 +22,6 @@ export const getUrls = (text: string): URLSet => {
 
         if (!url.startsWith("http")) url = "https://" + url;
 
-        console.log("URL obtida:", url);
-        
         try
         {
             urlSet.add(new URL(url));
