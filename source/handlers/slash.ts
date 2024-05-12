@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction, PermissionResolvable } from "discord.js";
-import fs from "fs";
+import { forEachFile } from "../utils/files";
 import path from "path";
 
 interface SlashCommand
@@ -13,29 +13,6 @@ export const slashCommands: SlashCommand[] = [];
 
 const initialFolder = path.join(__dirname, "..", "slash");
 
-readFolder(initialFolder);
-
-function readFolder (dirPath: string) {
-    let folder = fs.readdirSync(dirPath);
-
-    for (const file of folder)
-    {
-        readFile(path.join(dirPath, file));
-    }
-}
-
-function readFile (filePath: string) {
-    const file = fs.lstatSync(filePath);
-
-    if (file.isFile())
-    {
-        const slash = require(filePath);
-
-        if (slash.data && slash.execute) slashCommands.push(slash);
-    }
-
-    if (file.isDirectory())
-    {
-        readFolder(filePath);
-    }
-}
+forEachFile<SlashCommand>(initialFolder, file => {
+    if ("data" in file && "execute" in file) slashCommands.push(file);
+});

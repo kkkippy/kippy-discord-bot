@@ -41,14 +41,14 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
         reason,
     });
 
-    if (member) await member?.send({ embeds: [ kickEmbed ] }).catch(console.log);
+    if (member) await member.send({ embeds: [ kickEmbed ] }).catch(console.log);
 
-    await guild.members?.kick(user, reason)
+    await guild.members.kick(user, reason)
     .then(() => {
-        interaction.reply(`O usuário ${user} (${user?.id}) foi expulso de ${guild.name}.`);
+        interaction.reply(`O usuário ${user} (${user.id}) foi expulso de ${guild.name}.`);
         SendPunishmentLog(guild, `O usuário ${user} foi **expulso** de ${guild.name} por **${interaction.user.username}** pelo motivo: **${reason}**`);
     })
     .catch(e => {
-        interaction.reply(`Não foi possível expulsar o usuário ${user} (${user?.id}).\n${e}.`);
+        interaction.reply(`Não foi possível expulsar o usuário ${user} (${user.id}).\n${e}.`);
     });
 }

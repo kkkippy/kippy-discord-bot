@@ -6,5 +6,5 @@ export const data = new SlashCommandBuilder()
 .setDMPermission(false);
 
 export const execute = async (interaction: ChatInputCommandInteraction) => {
-    await interaction.reply("pong!");
+    return await interaction.reply("pong!");
 }

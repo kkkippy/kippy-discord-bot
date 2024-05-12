@@ -52,5 +52,5 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
         })
     }
 
-    interaction.reply({ content: `Exibindo as informações de **${user.username}** (${user.id}).`, embeds: [ userinfoEmbed ] });
+    return await interaction.reply({ content: `Exibindo as informações de **${user.username}** (${user.id}).`, embeds: [ userinfoEmbed ] });
 }

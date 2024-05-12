@@ -51,7 +51,7 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     const durationAsText   = duration[0];
 
     const guild  = client.guilds.cache.first() as Guild;
-    const member = guild.members.cache.get(user?.id as string);
+    const member = guild.members.cache.get(user.id as string);
 
     const muteEmbed = await BuildPunishmentEmbed({
         title: `Você foi silenciado em ${guild.name}.`,
@@ -59,14 +59,14 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
         reason,
     });
 
-    await member?.send({ embeds: [ muteEmbed ] }).catch(console.log);
+    await member?.send({ embeds: [ muteEmbed ] }).catch();
 
     await member?.timeout(durationAsNumber, reason)
-    .then(() => {
-        interaction.reply(`O membro ${user} (${user?.id}) foi silenciado por ${durationAsText} em ${guild.name}.`);
-        SendPunishmentLog(guild, `O membro ${user} foi **silenciado** por **${interaction.user.username}** durante **${durationAsText}** em ${guild.name} pelo motivo: **${reason}**`);
+    .then(async () => {
+        await interaction.reply(`O membro ${user} (${user.id}) foi silenciado por ${durationAsText} em ${guild.name}.`).catch();
+        await SendPunishmentLog(guild, `O membro ${user} foi **silenciado** por **${interaction.user.username}** durante **${durationAsText}** em ${guild.name} pelo motivo: **${reason}**`);
     })
-    .catch(e => {
-        interaction.reply(`Não foi possível silenciar o membro ${user} (${user?.id}).\n${e}.`);
+    .catch(async e => {
+        await interaction.reply(`Não foi possível silenciar o membro ${user} (${user.id}).\n${e}.`);
     });
 }

@@ -44,19 +44,19 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
         reason,
     });
 
-    if (member) await member?.send({ embeds: [ banEmbed ] }).catch(console.log);
+    if (member) await member.send({ embeds: [ banEmbed ] }).catch(console.log);
     /*
     Imagino que deva causar pânico no código caso o usuário esteja no servidor
     mas tenha bloqueado o bot, então como forma de prevenir esse pânico,
     fiz o tratamento do possível erro usando o catch
     */
 
-    await guild.members?.ban(user, { reason, deleteMessageSeconds: weekInSeconds })
-    .then(() => {
-        interaction.reply(`O usuário ${user} (${user?.id}) foi banido de ${guild.name}.`);
-        SendPunishmentLog(guild, `O usuário ${user} foi **banido** de ${guild.name} por **${interaction.user.username}** pelo motivo: **${reason}**`);
+    await guild.members.ban(user, { reason, deleteMessageSeconds: weekInSeconds })
+    .then(async () => {
+        await interaction.reply(`O usuário ${user} (${user.id}) foi banido de ${guild.name}.`).catch();
+        await SendPunishmentLog(guild, `O usuário ${user} foi **banido** de ${guild.name} por **${interaction.user.username}** pelo motivo: **${reason}**`);
     })
-    .catch(e => {
-        interaction.reply(`Não foi possível banir o usuário ${user} (${user?.id}).\n${e}.`);
+    .catch(async e => {
+        await interaction.reply(`Não foi possível banir o usuário ${user} (${user.id}).\n${e}.`).catch();
     });
 }

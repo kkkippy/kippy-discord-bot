@@ -11,11 +11,11 @@ export const requiredPermission = PermissionFlagsBits.BanMembers;
 export const execute = async (interaction: ChatInputCommandInteraction) => {
     const ticket = interaction.channel as ThreadChannel;
 
-    if (ticket.type != ChannelType.PrivateThread) return interaction.reply(`Este comando só pode ser utilizado em threads.`);
+    if (ticket.type != ChannelType.PrivateThread) return await interaction.reply(`Este comando só pode ser utilizado em threads.`).catch();
 
-    (await ticket.members.fetch()).forEach(member => member.remove());
+    (await ticket.members.fetch()).forEach(member => member.remove().catch());
 
-    await interaction.reply({ content: `Todos os membros foram removidos do ticket.`, ephemeral: true });
+    await interaction.reply({ content: `Todos os membros foram removidos do ticket.`, ephemeral: true }).catch();
 
-    SendTicketLog(interaction, "close", `${interaction.user} (${interaction.user.id}) **forçou o fechamento** do ticket ${ticket}.`);
+    await SendTicketLog(interaction, "close", `${interaction.user} (${interaction.user.id}) **forçou o fechamento** do ticket ${ticket}.`);
 }

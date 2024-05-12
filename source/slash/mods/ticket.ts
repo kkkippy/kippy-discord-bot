@@ -37,5 +37,5 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
         }
     });
 
-    interaction.reply({ content: `Mensagens setadas na categoria de tickets.`, ephemeral: true });
+    return await interaction.reply({ content: `Mensagens setadas na categoria de tickets.`, ephemeral: true });
 }
