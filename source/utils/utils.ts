@@ -30,6 +30,6 @@ export const getUrls = (text: string): URLSet => {
             console.log(`A URL ${url} não foi adicionada.\n${e}.`);
         }
     }
-
+    
     return urlSet;
 }

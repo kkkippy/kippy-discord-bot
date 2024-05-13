@@ -1,6 +1,7 @@
 import { isBlacklisted, moderateMessage } from "../utils/blacklist";
 import { commands } from "../handlers/commands";
 import { Events, Message } from "discord.js";
+import { hasUrl } from "../utils/utils";
 
 export const eventName = Events.MessageCreate;
 
@@ -18,8 +19,29 @@ function isCommand (message: Message)
 	command.execute(message);
 }
 
+async function filterCreationsMessage (message: Message)
+{
+	if (message.attachments.size === 0 && !hasUrl(message.content))
+	{
+		await message.delete();
+		await message.member?.send("Ei, você não pode enviar mensagens soltas nas criações! Adicione um link ou alguma mídia para conseguir enviar sem nenhum problema.").catch();
+	} else
+	{
+		await message.react("<:verificado:1219652443105787924>");
+		await message.react("<:cancelar:1219659918592708649>");
+		await message.react("<:estrela:1219659104763641977>");
+		await message.startThread({
+			name: `Criação de ${message.author.username}`
+		});
+	}
+}
+
 export const execute = async (message: Message) => {
 	if (!message.member || message.author.bot) return;
 
 	if (isBlacklisted(message)) return await moderateMessage(message, "Envio de mensagem blacklisted.");
+
+	if (message.channelId === "1207419439914684446") filterCreationsMessage(message);
+
+	
 }
