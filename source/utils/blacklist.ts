@@ -31,13 +31,13 @@ async function MuteMember (member: GuildMember, reason: string, message?: Messag
 
 	await member.timeout(minute * 10, reason)
 	.then(() => {
-		if (message) message.channel.send(`O usuário ${member} (${member.id}) foi silenciado **automaticamente** por **10 minutos** por enviar uma mensagem blacklisted.`);
+		if (message) message.channel.send(`O usuário ${member} (${member.id}) foi silenciado **automaticamente** por **10 minutos** por enviar uma mensagem blacklisted.`).catch();
 		
-		member.send({ embeds: [ muteEmbed ] }).catch(console.log);
+		member.send({ embeds: [ muteEmbed ] }).catch();
 		
 		SendPunishmentLog(guild, `O usuário ${member} (${member.id}) foi silenciado **automaticamente** por **10 minutos** pelo motivo: **${reason}**`);
 	})
-	.catch(console.log);
+	.catch();
 }
 
 const isWhitelistedInvite = (inviteName: string) => whitelistedInvites.includes(inviteName);
@@ -74,7 +74,7 @@ export async function moderateMessage (message: Message, reason: string)
 
 	if (!member || mods[member.id]) return;
 
-	if (message.deletable) message.delete();
+	if (message.deletable) await message.delete();
 
 	await MuteMember(member, reason, message);
 }

@@ -27,12 +27,12 @@ async function filterCreationsMessage (message: Message)
 		await message.member?.send("Ei, você não pode enviar mensagens soltas nas criações! Adicione um link ou alguma mídia para conseguir enviar sem nenhum problema.").catch();
 	} else
 	{
-		await message.react("<:verificado:1219652443105787924>");
-		await message.react("<:cancelar:1219659918592708649>");
-		await message.react("<:estrela:1219659104763641977>");
+		await message.react("<:verificado:1219652443105787924>").catch();
+		await message.react("<:cancelar:1219659918592708649>").catch();
+		await message.react("<:estrela:1219659104763641977>").catch();
 		await message.startThread({
 			name: `Criação de ${message.author.username}`
-		});
+		}).catch();
 	}
 }
 
