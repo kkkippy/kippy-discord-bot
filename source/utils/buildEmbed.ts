@@ -121,7 +121,7 @@ export const BuildPunishmentEmbed = async (options: PunishmentEmbedOptions) => {
 			},
 			{
 				name: "Acha que isso foi um engano?",
-				value: "Se você acha que isso foi um engano, entre em contato com **@kkkippy**, **@woozinho** ou **@ianwu8** (aceitamos seu pedido de amizade)."
+				value: "Se você acha que isso foi um engano, entre em contato com **@kkkippy** ou **@ianwu8** (aceitamos seu pedido de amizade)."
 			}
 		]
 	)
