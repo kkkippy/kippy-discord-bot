@@ -14,5 +14,4 @@ interface Mods
 export const mods: Mods = {
     "1100135686948012213": AllPermissions, // Kippy
     "884296522345369622" : AllPermissions, // Ianwu8
-    "1203512811540709447": AllPermissions, // Woo
 };
