@@ -24,15 +24,15 @@ async function filterCreationsMessage (message: Message)
 	if (message.attachments.size === 0 && !hasUrl(message.content))
 	{
 		await message.delete();
-		await message.member?.send("Ei, você não pode enviar mensagens soltas nas criações! Adicione um link ou alguma mídia para conseguir enviar sem nenhum problema.").catch();
+		await message.member?.send("Ei, você não pode enviar mensagens soltas nas criações! Adicione um link ou alguma mídia para conseguir enviar sem nenhum problema.").catch(console.log);
 	} else
 	{
-		await message.react("<:verificado:1219652443105787924>").catch();
-		await message.react("<:cancelar:1219659918592708649>").catch();
-		await message.react("<:estrela:1219659104763641977>").catch();
+		await message.react("<:verificado:1219652443105787924>").catch(console.log);
+		await message.react("<:cancelar:1219659918592708649>").catch(console.log);
+		await message.react("<:estrela:1219659104763641977>").catch(console.log);
 		await message.startThread({
 			name: `Criação de ${message.author.username}`
-		}).catch();
+		}).catch(console.log);
 	}
 }
 
