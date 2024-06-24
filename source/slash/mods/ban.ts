@@ -51,7 +51,7 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     fiz o tratamento do possível erro usando o catch
     */
 
-    await guild.members.ban(user, { reason, deleteMessageSeconds: weekInSeconds })
+    await guild.members.ban(user, { reason, /* deleteMessageSeconds: weekInSeconds (mt paia) */ })
     .then(async () => {
         await interaction.reply(`O usuário ${user} (${user.id}) foi banido de ${guild.name}.`).catch();
         await SendPunishmentLog(guild, `O usuário ${user} foi **banido** de ${guild.name} por **${interaction.user.username}** pelo motivo: **${reason}**`);
