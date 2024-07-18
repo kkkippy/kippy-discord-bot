@@ -19,6 +19,7 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     const shitpost = await (await fetch("https://api.thedailyshitpost.net/random")).json() as ShitpostData;
 
     const randomShitpost = new URL(shitpost.url);
+    const shitpostFileName = randomShitpost.pathname.split("/").pop();
 
-    await interaction.reply({ content: `[${randomShitpost.pathname.split("/").pop()}](${randomShitpost})` });
+    await interaction.reply({ content: `[${shitpostFileName}](${randomShitpost})` });
 }
