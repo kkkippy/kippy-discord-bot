@@ -1,10 +1,10 @@
 import path from "node:path";
 import fs from "node:fs";
 
-export function forEachFile <FileStruct> (
+const forEachFile = async <FileStruct> (
     dirPath: string,
     callback: (file: FileStruct) => void
-) {
+) => {
     const folder = fs.readdirSync(dirPath);
 
     for (const file of folder)
@@ -22,3 +22,5 @@ export function forEachFile <FileStruct> (
         if (fileStat.isDirectory()) forEachFile(filePath, callback);
     }
 }
+
+export default forEachFile;

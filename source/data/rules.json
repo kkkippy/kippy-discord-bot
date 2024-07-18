@@ -1,0 +1,30 @@
+{
+    "generalRules": {
+        "title": "casca de bala",
+        "description": "ze da manga",
+        "color": 0,
+        "footer": {
+            "text": "alo da silva",
+            "icon_url": "undefined"
+        },
+        "thumbnail": {
+            "url": "https://tenor.com/view/dog-funny-dog-crazy-dog-gif-6740718838963975143"
+        },
+        "fields": [
+            {
+                "name": "bora",
+                "value": "bill"
+            }
+        ],
+        "timestamp": "2024-07-14T09:18:29.299Z",
+        "url": "https://www.youtube.com/@kkkippy",
+        "author": {
+            "name": "skibidi toilet",
+            "url": "undefined",
+            "icon_url": "undefined"
+        },
+        "image": {
+            "url": "https://tenor.com/view/dog-funny-dog-crazy-dog-gif-6740718838963975143"
+        }
+    }
+}

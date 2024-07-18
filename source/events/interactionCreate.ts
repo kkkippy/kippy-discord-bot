@@ -1,34 +1,61 @@
-import { ChatInputCommandInteraction, Events } from "discord.js";
-import { slashCommands } from "../handlers/slash";
-import { mods } from "../utils/mods";
-import { client } from "../client";
+import {
+    ChatInputCommandInteraction,
+    GuildMemberRoleManager,
+    Events,
+    Guild,
+} from "discord.js";
+
+import slashCommands from "../handlers/slash";
 
 export const eventName = Events.InteractionCreate;
 
+interface CustomErrorMessagesInterface
+{
+    [key: string]: string
+}
+
+const customErrorMessages: CustomErrorMessagesInterface = {
+    // Caso você tenha clonado este repositório e quiser remover as mensagens de erro personalizadas, basta deletar esse objeto e alterar a linha 38 como quiser
+    "punch": "Você precisa de mais 3 anos de treinamento para usar este comando!"
+};
+
+const generateCustomErrorMessage = (commandName: string) => {
+    return customErrorMessages[commandName] || "Ei, você não tem permissão para usar esse comando!";
+}
+
 export const execute = async (interaction: ChatInputCommandInteraction) => {
-	if (!interaction.isChatInputCommand()) return;
+    if (!interaction.isChatInputCommand()) return;
 
-	const slashCommand = slashCommands.find(cmd => cmd.data.name === interaction.commandName);
+    const slashCommand = slashCommands.find(command => command.data.name === interaction.commandName);
+    
+	if (!slashCommand)
+    {
+        await interaction.reply(`Nenhuma correspondência foi encontrada para o comando ${interaction.commandName}.`).catch(console.error);
+        return;
+    };
+    
+    const member = interaction.member;
+    
+    // Se não for um membro, então nem tchun (ou melhor, se a interação não for feita em um servidor, então retorne)
+    if (!member) return;
+    
+    const roles = member.roles as GuildMemberRoleManager;
 
-	if (!slashCommand) return interaction.reply(`Nenhuma correspondência foi encontrada para o comando ${interaction.commandName}.`);
-	
-	let guild = client.guilds.cache.first();
-	let member = guild?.members.cache.get(interaction.user.id);
+    const customErrorMessage = generateCustomErrorMessage(interaction.commandName);
 
-	if (
-		(
-			!member                                                       // Se não possuir o objeto membro,
-			|| !mods[member.id]                                           // ou não estiver na lista de moderadores/administradores,
-			|| !mods[member.id].includes(slashCommand.requiredPermission) // ou não possuir a permissão necessária para executar o comando,
-		)
-		&& slashCommand.requiredPermission                          	  // e o comando exigir permissão para ser executado
-	) return interaction.reply("Você não tem permissão para usar este comando.");
+    const guild = interaction.guild as Guild;
 
-	return slashCommand.execute(interaction)
-	.catch(async e => {
-		if (interaction.deferred || interaction.replied)
-		{
-			await interaction.followUp({ content: `Ocorreu um erro ao executar este comando: ${e}` });
-		}
-	});
+    // Verificar se o comando requer algum cargo e, se for o caso, verificar se o membro possui o cargo necessário para executar o comando e se o ID do membro é diferente do ID do dono
+    if
+    (
+        slashCommand.requiredRoles &&
+        !roles.cache.some(role => slashCommand.requiredRoles.includes(role.id)) &&
+        member.user.id != guild.ownerId
+    )
+    {
+        await interaction.reply(customErrorMessage).catch(e => console.error(`Erro ao gerar mensagem de erro:`, e));
+        return;
+    };
+    
+    await slashCommand.execute(interaction).catch(console.error);
 }

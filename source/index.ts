@@ -1,5 +1,5 @@
 import { deployCommands } from "./deploy-commands";
-import { events } from "./handlers/events";
+import events from "./handlers/events";
 import { token } from "./config.json";
 import { client } from "./client";
 

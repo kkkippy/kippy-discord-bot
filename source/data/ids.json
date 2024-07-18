@@ -1,0 +1,24 @@
+{
+    "_comment1": "Canais",
+    "suggestionTicketChannel": "1166876138069573725",
+    "deleteTicketLogChannel": "1178331056580075651",
+    "punishmentLogChannel": "1230843907114532866",
+    "supportTicketChannel": "1166876115776847984",
+    "newTicketLogChannel": "1178210754432868412",
+    "createVoiceChannel": "1262969483132141729",
+    "rulesChannel": "1166806421019557989",
+
+    "_comment2": "Categorias",
+    "voiceChannelsCategory": "1166806398852673647",
+
+    "_comment3": "Cargos",
+    "moderatorRole": "1166835230578065458",
+    "supportRole": "1178324960603807795",
+    "adminRole": "1166806355785564270",
+
+    "_comment4": "Cargo especial",
+    "saitamaRole": "1259782839830970419",
+
+    "_comment5": "Servidor",
+    "serverId": "1162143715331149844"
+}
