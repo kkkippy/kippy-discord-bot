@@ -54,6 +54,6 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
         await interaction.reply(`O membro ${user} (${user.id}) foi expulso de **${guild.name}**.`);
     } catch (e)
     {
-        await interaction.reply(`Não foi possível expulsar o usuário ${user} (${user.id}).\n${e}.`);
+        await interaction.reply(`Não foi possível expulsar o usuário ${user} (${user.id}).\n${e}.`).catch(console.error);
     }
 }

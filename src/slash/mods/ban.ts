@@ -49,6 +49,6 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
         await SendPunishmentLog(`O ${member ? "membro" : "usuário"} ${user} (${user.id}) foi **banido** por ${author} (${author.id}) de **${guild.name}** pelo motivo: **${reason}**`);
     } catch (e)
     {
-        await interaction.reply(`Não foi possível banir o usuário ${user} (${user.id}).\n${e}.`).catch();
+        await interaction.reply(`Não foi possível banir o usuário ${user} (${user.id}).\n${e}.`).catch(console.error);
     }
 }
