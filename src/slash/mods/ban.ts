@@ -1,13 +1,12 @@
 import {
     ChatInputCommandInteraction,
     SlashCommandBuilder,
+    GuildMember,
     Guild,
     User,
-    GuildMember
 } from "discord.js";
 
 import { adminRole } from "../../data/ids.json";
-import { SendPunishmentLog } from "../../utils/logs";
 import { Ban } from "../../utils/applyPunishment";
 
 export const data = new SlashCommandBuilder()
@@ -47,7 +46,7 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
         await interaction.reply(`O usuário ${user} (${user.id}) foi banido de **${guild.name}**.`);
     } catch (e)
     {
-        
+
         await interaction.reply(`Não foi possível banir o usuário ${user} (${user.id}).\n${e}.`).catch(console.error);
     }
 }
