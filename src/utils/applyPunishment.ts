@@ -4,13 +4,14 @@ import {
 } from "discord.js";
 
 import { serverId } from "../data/ids.json";
-import { client } from "../client";
 import { SendPunishmentLog } from "./logs";
+import client from "../client";
 
-// Alteração mais recente: Remoção do SendPunishmentLog desse código
-
-async function Ban (user: User, author: User, reason: string)
-{
+async function Ban (
+    user: User,
+    author: GuildMember,
+    reason: string
+) {
     const guild = await client.guilds.fetch(serverId);
 
     const member = await guild.members.fetch(user.id);
@@ -22,28 +23,39 @@ async function Ban (user: User, author: User, reason: string)
     await guild.members.ban(user, { reason });
 }
 
-async function Unban (user: User, reason: string)
-{
+async function Unban (
+    user: User,
+    author: GuildMember,
+    reason: string
+) {
     const guild = await client.guilds.fetch(serverId);
 
     await guild.members.unban(user, reason);
 }
 
-async function Kick (member: GuildMember, reason: string)
-{
+async function Kick (
+    member: GuildMember,
+    author: GuildMember,
+    reason: string
+) {
     if (!member) throw Error;
     
     const guild = member.guild;
     await member.kick(reason);
 }
 
-async function Mute (member: GuildMember, timeout: number, reason: string)
-{
+async function Mute (
+    member: GuildMember,
+    timeout: number,
+    reason: string
+) {
     await member.timeout(timeout, reason);
 }
 
-async function Unmute (member: GuildMember, reason: string)
-{
+async function Unmute (
+    member: GuildMember,
+    reason: string
+) {
     const guild = member.guild;
 
     await member.timeout(null, reason);

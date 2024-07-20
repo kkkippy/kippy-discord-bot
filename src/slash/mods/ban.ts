@@ -2,7 +2,8 @@ import {
     ChatInputCommandInteraction,
     SlashCommandBuilder,
     Guild,
-    User
+    User,
+    GuildMember
 } from "discord.js";
 
 import { adminRole } from "../../data/ids.json";
@@ -32,8 +33,7 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     const reason = interaction.options.getString("motivo") || "Não especificado.";
     const user   = interaction.options.getUser("usuario") as User;
 
-    const author = interaction.user;
-    
+    const author = interaction.member as GuildMember;
     const guild = interaction.guild as Guild;
     
     try
@@ -42,13 +42,12 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
 
         if (member) await member.send({ embeds: [ /* Colocar o embed aqui */ ] });
         
-        await Ban(user, interaction.user, reason);
+        await Ban(user, author, reason);
 
         await interaction.reply(`O usuário ${user} (${user.id}) foi banido de **${guild.name}**.`);
-
-        await SendPunishmentLog(`O ${member ? "membro" : "usuário"} ${user} (${user.id}) foi **banido** por ${author} (${author.id}) de **${guild.name}** pelo motivo: **${reason}**`);
     } catch (e)
     {
+        
         await interaction.reply(`Não foi possível banir o usuário ${user} (${user.id}).\n${e}.`).catch(console.error);
     }
 }

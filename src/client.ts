@@ -1,6 +1,6 @@
 import { Client, IntentsBitField } from "discord.js";
 
-export const client = new Client({
+const client = new Client({
     intents: [
         IntentsBitField.Flags.GuildMessageReactions,
         IntentsBitField.Flags.GuildVoiceStates,
@@ -10,3 +10,5 @@ export const client = new Client({
         IntentsBitField.Flags.Guilds,
     ]
 });
+
+export default client;

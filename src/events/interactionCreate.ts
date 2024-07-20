@@ -36,7 +36,7 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     
     const member = interaction.member;
     
-    // Se não for um membro, então nem tchun (ou melhor, se a interação não for feita em um servidor, então retorne)
+    // Critério definido para todo o resto do projeto: Todos os comandos terão de ser executado no servidor.
     if (!member) return;
     
     const roles = member.roles as GuildMemberRoleManager;

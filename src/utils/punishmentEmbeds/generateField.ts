@@ -3,9 +3,9 @@
 import {
     supportRole,
     serverId
-} from "../../data/generalConfig.json";
+} from "../../data/ids.json";
 
-import { client } from "../../client";
+import client from "../../client";
 
 const generateStaffNames = async () => {
     try
@@ -14,14 +14,13 @@ const generateStaffNames = async () => {
         const members = await guild.members.fetch();
         
         const staffs = members
-        .filter(member => member.roles.cache.has(supportRole)) // Filtrará apenas os membros que possuem cargo de suporte
-        .map(member => `**@${member.user.username}**`); // E depois organizará os dados para que possam ser inseridos dentro dos embeds de punições
+        .filter(member => member.roles.cache.has(supportRole))
+        .map(member => `**@${member.user.username}**`);
 
-        const lastStaff = staffs.pop(); // Removerá o último staff da lista
+        const lastStaff = staffs.pop();
 
         if (!lastStaff)
         {
-            // Caso não exista staffs, então o bot utilizará o username do dono do servidor
             const owner = await client.users.fetch(guild.ownerId);
 
             return `**@${owner.username}**`;

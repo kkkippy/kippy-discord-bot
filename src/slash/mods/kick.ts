@@ -1,6 +1,7 @@
 import {
     ChatInputCommandInteraction,
     Guild,
+    GuildMember,
     SlashCommandBuilder,
     User
 } from "discord.js";
@@ -41,15 +42,14 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     const reason = interaction.options.getString("motivo") || "Não especificado.";
     const user   = interaction.options.getUser("usuario") as User;
 
-    const author = interaction.user;
-
+    const author = interaction.member as GuildMember;
     const guild = interaction.guild as Guild;
     
     try
     {
         const member = await guild.members.fetch(user.id);
 
-        await Kick(member, reason);
+        await Kick(member, author, reason);
 
         await interaction.reply(`O membro ${user} (${user.id}) foi expulso de **${guild.name}**.`);
     } catch (e)

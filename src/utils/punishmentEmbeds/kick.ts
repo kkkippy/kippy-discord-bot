@@ -6,7 +6,7 @@ import {
 
 import { GenerateApologyField } from "./generateField";
 
-export const BuildBanEmbed =
+export const BuildKickEmbed =
 async (
     banAuthor: User,
     guild: Guild,
