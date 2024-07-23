@@ -4,7 +4,7 @@ import {
     User
 } from "discord.js";
 
-import { GenerateApologyField } from "./generateField";
+import GenerateApologyField from "./generateField";
 
 export const BuildKickEmbed =
 async (

@@ -33,9 +33,11 @@ const generateStaffNames = async () => {
     }
 }
 
-export const GenerateApologyField = async () => [
+const GenerateApologyField = async () => [
     {
         name: "Acha que isso foi um engano?",
         value: `Se você acha que isso foi um engano, entre em contato com ${await generateStaffNames()} (aceitamos seu pedido de amizade).`
     }
 ]
+
+export default GenerateApologyField;
