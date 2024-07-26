@@ -55,7 +55,7 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     if (
         await isStaff(user.id) &&
         !interaction.memberPermissions?.has("Administrator")
-    ) return deferReply.edit(`Está tentando banir seu colega de trabalho? 🤨`);
+    ) return deferReply.edit(`Está tentando silenciar seu colega de trabalho? 🤨`);
 
     try
     {
