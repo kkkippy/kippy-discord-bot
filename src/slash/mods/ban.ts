@@ -38,7 +38,7 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     
     const deferReply = await interaction.deferReply();
 
-    if (author.id === user.id) return deferReply.edit(RandomPhrase("banir você mesmo!"));
+    if (author.id === user.id) return deferReply.edit(RandomPhrase("banir a si mesmo!"));
 
     if (
         await isStaff(user.id) &&
