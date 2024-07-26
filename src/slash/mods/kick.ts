@@ -36,7 +36,7 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     const reason = interaction.options.getString("motivo") || "Não especificado.";
     const user   = interaction.options.getUser("usuario") as User;
 
-    const author = interaction.member as GuildMember;
+    const author = interaction.user;
     const guild = interaction.guild as Guild;
     
     const deferReply = await interaction.deferReply();

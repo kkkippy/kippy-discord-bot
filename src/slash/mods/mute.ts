@@ -53,7 +53,7 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     {
         const member = await guild.members.fetch(user.id);
 
-        await Mute(member, duration, reason);
+        await Mute(member, author, duration, reason);
 
         await deferReply.edit(`O usuário ${user} (${user.id}) foi silenciado em **${guild.name}** por ${duration} horas.`);
 

@@ -29,7 +29,7 @@ async function Ban (
 
 async function Unban (
     user: User,
-    author: GuildMember,
+    author: User,
     reason: string
 ) {
     const guild = await client.guilds.fetch(server.id);
@@ -39,7 +39,7 @@ async function Unban (
 
 async function Kick (
     member: GuildMember,
-    author: GuildMember,
+    author: User,
     reason: string
 ) {
     if (!member) throw Error;
@@ -50,6 +50,7 @@ async function Kick (
 
 async function Mute (
     member: GuildMember,
+    author: User,
     timeout: number,
     reason: string
 ) {
@@ -58,6 +59,7 @@ async function Mute (
 
 async function Unmute (
     member: GuildMember,
+    author: User,
     reason: string
 ) {
     const guild = member.guild;
