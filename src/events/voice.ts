@@ -30,7 +30,7 @@ export const execute = async (oldState: VoiceState, newState: VoiceState) => {
     do usuário no qual ele reivindicou a posse
     */
 
-    const enteredCreateVoiceChannel = newState.channelId === channels.createVoiceChannel;
+    const enteredCreateVoiceChannel = newState.channelId === channels.createVoice;
 
     
 }

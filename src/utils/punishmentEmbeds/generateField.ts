@@ -14,7 +14,7 @@ const generateStaffNames = async () => {
         const members = await guild.members.fetch();
         
         const staffs = members
-        .filter(member => member.roles.cache.has(roles.supportRole))
+        .filter(member => member.roles.cache.has(roles.support))
         .map(member => `**@${member.user.username}**`);
 
         const lastStaff = staffs.pop();

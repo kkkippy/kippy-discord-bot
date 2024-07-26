@@ -1,23 +1,23 @@
 {
     "channels": {
-        "suggestionTicketChannel": "1166876138069573725",
-        "deleteTicketLogChannel": "1178331056580075651",
-        "punishmentLogChannel": "1230843907114532866",
-        "supportTicketChannel": "1166876115776847984",
-        "newTicketLogChannel": "1178210754432868412",
-        "createVoiceChannel": "1262969483132141729",
-        "rulesChannel": "1166806421019557989"
+        "suggestionTicket": "1166876138069573725",
+        "deleteTicketLog": "1178331056580075651",
+        "punishmentLog": "1230843907114532866",
+        "supportTicket": "1166876115776847984",
+        "newTicketLog": "1178210754432868412",
+        "createVoice": "1262969483132141729",
+        "rules": "1166806421019557989"
     },
 
     "categories": {
-        "voiceChannelsCategory": "1166806398852673647"
+        "voiceChannels": "1166806398852673647"
     },
 
     "roles": {
-        "moderatorRole": "1166835230578065458",
-        "supportRole": "1178324960603807795",
-        "saitamaRole": "1259782839830970419",
-        "adminRole": "1166806355785564270"
+        "moderator": "1166835230578065458",
+        "support": "1178324960603807795",
+        "saitama": "1259782839830970419",
+        "admin": "1166806355785564270"
     },
 
     "server": {

@@ -27,9 +27,9 @@ export const data = new SlashCommandBuilder()
 )
 
 export const requiredRoles = [
-    roles.moderatorRole,
-    roles.supportRole,
-    roles.adminRole
+    roles.moderator,
+    roles.support,
+    roles.admin
 ];
 
 export const execute = async (interaction: ChatInputCommandInteraction) => {

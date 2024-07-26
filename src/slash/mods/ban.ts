@@ -25,7 +25,7 @@ export const data = new SlashCommandBuilder()
     .setDescription("Descreva o motivo do banimento.")
 )
 
-export const requiredRoles = [ roles.adminRole ];
+export const requiredRoles = [ roles.admin ];
 
 export const execute = async (interaction: ChatInputCommandInteraction) => {
     const reason = interaction.options.getString("motivo") || "Não especificado.";

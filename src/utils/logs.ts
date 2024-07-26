@@ -11,7 +11,7 @@ export const SendPunishmentLog = async (message: string) => {
     {
         const guild = await client.guilds.fetch(server.id);
 
-        const channel = await guild.channels.fetch(channels.punishmentLogChannel) as TextChannel;
+        const channel = await guild.channels.fetch(channels.punishmentLog) as TextChannel;
 
         await channel.send(message);
     } catch (e) {

@@ -1,6 +1,6 @@
 /*
 Caso queira remover este comando, lembre-se de remover seu respectivo embed em punch.ts, localizado em /source/utils/punishmentEmbeds/
-e também de remover a propriedade 'saitamaRole' de generalConfig.json localizado em /source/data/
+e também de remover a propriedade 'saitama' de generalConfig.json localizado em /source/data/
 
 Fiz este comando para memorar o meu amigo Ianwu8, que é o único administrador com permissão de administrador de fato do meu servidor
 */
@@ -17,7 +17,7 @@ export const data = new SlashCommandBuilder()
 .setDescription("...")
 .setDMPermission(false);
 
-export const requiredRoles = [ roles.saitamaRole ];
+export const requiredRoles = [ roles.saitama ];
 
 export const execute = async (interaction: ChatInputCommandInteraction) => {
     // Comando de ban super fodástico (ainda preciso fazer)
