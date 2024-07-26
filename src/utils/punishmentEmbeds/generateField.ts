@@ -1,8 +1,8 @@
 // Caso este sistema não esteja favorável para você, sinta-se à vontade para modifica-lo como quiser
 
 import {
-    supportRole,
-    serverId
+    roles,
+    server
 } from "../../data/ids.json";
 
 import client from "../../client";
@@ -10,11 +10,11 @@ import client from "../../client";
 const generateStaffNames = async () => {
     try
     {
-        const guild = await client.guilds.fetch(serverId);
+        const guild = await client.guilds.fetch(server.id);
         const members = await guild.members.fetch();
         
         const staffs = members
-        .filter(member => member.roles.cache.has(supportRole))
+        .filter(member => member.roles.cache.has(roles.supportRole))
         .map(member => `**@${member.user.username}**`);
 
         const lastStaff = staffs.pop();

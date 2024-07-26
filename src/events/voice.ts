@@ -3,7 +3,7 @@ import {
     Events
 } from "discord.js";
 
-import { createVoiceChannel } from "../data/ids.json";
+import { channels } from "../data/ids.json";
 
 export const eventName = Events.VoiceStateUpdate;
 
@@ -30,7 +30,7 @@ export const execute = async (oldState: VoiceState, newState: VoiceState) => {
     do usuário no qual ele reivindicou a posse
     */
 
-    const enteredCreateVoiceChannel = newState.channelId === createVoiceChannel;
+    const enteredCreateVoiceChannel = newState.channelId === channels.createVoiceChannel;
 
     
 }
