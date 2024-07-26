@@ -24,5 +24,5 @@ async (
     iconURL: banAuthor.displayAvatarURL(),
     text: `Banido por ${banAuthor.username} (${banAuthor.id})`
 })
-.setColor(0x0)
+.setColor(0xe04c4c)
 .setTimestamp()
