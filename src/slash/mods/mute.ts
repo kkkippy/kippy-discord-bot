@@ -1,7 +1,7 @@
 import {
     ChatInputCommandInteraction,
-    Guild,
     SlashCommandBuilder,
+    Guild,
     User
 } from "discord.js";
 
