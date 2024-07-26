@@ -50,7 +50,7 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
 
     const deferReply = await interaction.deferReply();
 
-    if (author.id === user.id) return deferReply.edit(RandomPhrase());
+    if (author.id === user.id) return deferReply.edit(RandomPhrase("se autossilenciar!"));
 
     if (
         await isStaff(user.id) &&
