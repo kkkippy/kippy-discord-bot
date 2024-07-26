@@ -4,6 +4,8 @@ import {
     User
 } from "discord.js";
 
+import { basilMuitobravo } from "../../data/basilEmotes.json";
+
 import GenerateApologyField from "./generateField";
 
 export const BuildBanEmbed =
@@ -13,6 +15,7 @@ async (
     reason: string
 ) => new EmbedBuilder()
 .setTitle(`Você foi banido de ${guild.name}.`)
+.setThumbnail(basilMuitobravo)
 .setFields(
     {
         name: "Motivo do banimento:",
