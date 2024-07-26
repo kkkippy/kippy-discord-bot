@@ -3,7 +3,7 @@ import {
     SlashCommandBuilder
 } from "discord.js";
 
-import { fightingDogs } from "../../data/general.json";
+import { fightingDogs } from "../../data/funny.json";
 
 export const data = new SlashCommandBuilder()
 .setName("x1decachorro")

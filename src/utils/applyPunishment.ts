@@ -3,20 +3,23 @@ import {
     User
 } from "discord.js";
 
-import { serverId } from "../data/ids.json";
+import { server } from "../data/ids.json";
 import { SendPunishmentLog } from "./logs";
 import client from "../client";
+import { BuildBanEmbed } from "./punishmentEmbeds/ban";
 
 async function Ban (
     user: User,
-    author: GuildMember,
+    author: User,
     reason: string
 ) {
-    const guild = await client.guilds.fetch(serverId);
+    const guild = await client.guilds.fetch(server.id);
 
     const member = await guild.members.fetch(user.id);
 
-    if (member && member.bannable) await member.send({ content: "Oi" }).catch(console.error);
+    const banEmbed = await BuildBanEmbed(author, guild, reason);
+
+    if (member && member.bannable) await member.send({ embeds: [ banEmbed ] }).catch(console.error);
 
     await SendPunishmentLog(`O membro ${member} (${member.id}) foi **banido** por ${author} (${author.id}) de **${guild.name}** pelo motivo: **${reason}**`);
 
@@ -28,7 +31,7 @@ async function Unban (
     author: GuildMember,
     reason: string
 ) {
-    const guild = await client.guilds.fetch(serverId);
+    const guild = await client.guilds.fetch(server.id);
 
     await guild.members.unban(user, reason);
 }

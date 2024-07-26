@@ -6,14 +6,8 @@ import {
     User
 } from "discord.js";
 
-import {
-    moderatorRole,
-    supportRole,
-    adminRole
-} from "../../data/ids.json";
-
-import { SendPunishmentLog } from "../../utils/logs";
 import { Kick } from "../../utils/applyPunishment";
+import { roles } from "../../data/ids.json";
 
 export const data = new SlashCommandBuilder()
 .setName("kick")
@@ -33,9 +27,9 @@ export const data = new SlashCommandBuilder()
 )
 
 export const requiredRoles = [
-    moderatorRole,
-    supportRole,
-    adminRole
+    roles.moderatorRole,
+    roles.supportRole,
+    roles.adminRole
 ];
 
 export const execute = async (interaction: ChatInputCommandInteraction) => {

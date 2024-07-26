@@ -1,13 +1,12 @@
 import {
     ChatInputCommandInteraction,
     SlashCommandBuilder,
-    GuildMember,
     Guild,
-    User,
+    User
 } from "discord.js";
 
-import { adminRole } from "../../data/ids.json";
 import { Ban } from "../../utils/applyPunishment";
+import { roles } from "../../data/ids.json";
 
 export const data = new SlashCommandBuilder()
 .setName("ban")
@@ -26,14 +25,14 @@ export const data = new SlashCommandBuilder()
     .setDescription("Descreva o motivo do banimento.")
 )
 
-export const requiredRoles = [ adminRole ];
+export const requiredRoles = [ roles.adminRole ];
 
 export const execute = async (interaction: ChatInputCommandInteraction) => {
     const reason = interaction.options.getString("motivo") || "Não especificado.";
     const user   = interaction.options.getUser("usuario") as User;
 
-    const author = interaction.member as GuildMember;
     const guild = interaction.guild as Guild;
+    const author = interaction.user;
     
     const deferReply = await interaction.deferReply();
 

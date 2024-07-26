@@ -5,10 +5,7 @@ import {
     User
 } from "discord.js";
 
-import {
-    moderatorRole,
-    adminRole
-} from "../../data/ids.json";
+import { roles } from "../../data/ids.json";
 
 import { SendPunishmentLog } from "../../utils/logs";
 import { Mute } from "../../utils/applyPunishment";
@@ -38,8 +35,8 @@ export const data = new SlashCommandBuilder()
 )
 
 export const requiredRoles = [
-    moderatorRole,
-    adminRole
+    roles.moderatorRole,
+    roles.adminRole
 ];
 
 export const execute = async (interaction: ChatInputCommandInteraction) => {
