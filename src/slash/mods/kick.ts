@@ -5,6 +5,7 @@ import {
     User
 } from "discord.js";
 
+import { RandomPhrase } from "../../utils/randomPhrase";
 import { Kick } from "../../utils/applyPunishment";
 import { isStaff } from "../../utils/isStaff";
 import { roles } from "../../data/ids.json";
@@ -40,6 +41,8 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     const guild = interaction.guild as Guild;
     
     const deferReply = await interaction.deferReply();
+
+    if (author.id === user.id) return deferReply.edit(RandomPhrase());
 
     if (
         await isStaff(user.id) &&
