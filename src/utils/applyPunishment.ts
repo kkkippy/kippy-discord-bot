@@ -3,10 +3,11 @@ import {
     User
 } from "discord.js";
 
-import { server } from "../data/ids.json";
-import { SendPunishmentLog } from "./logs";
 import client from "../client";
+
 import { BuildBanEmbed } from "./punishmentEmbeds/ban";
+import { SendPunishmentLog } from "./logs";
+import { server } from "../data/ids.json";
 
 async function Ban (
     user: User,
