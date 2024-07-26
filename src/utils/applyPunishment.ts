@@ -16,13 +16,13 @@ async function Ban (
 ) {
     const guild = await client.guilds.fetch(server.id);
 
-    const member = await guild.members.fetch(user.id);
+    const member = guild.members.cache.get(user.id);
 
     const banEmbed = await BuildBanEmbed(author, guild, reason);
 
     if (member && member.bannable) await member.send({ embeds: [ banEmbed ] }).catch(console.error);
 
-    await SendPunishmentLog(`O membro ${member} (${member.id}) foi **banido** por ${author} (${author.id}) de **${guild.name}** pelo motivo: **${reason}**`);
+    await SendPunishmentLog(`O ${member ? "membro" : "usuário"} ${user} (${user.id}) foi **banido** por ${author} (${author.id}) de **${guild.name}** pelo motivo: **${reason}**`);
 
     await guild.members.ban(user, { reason });
 }
