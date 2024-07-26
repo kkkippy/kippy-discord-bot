@@ -21,5 +21,8 @@ export const requiredRoles = [ saitamaRole ];
 
 export const execute = async (interaction: ChatInputCommandInteraction) => {
     // Comando de ban super fodástico (ainda preciso fazer)
-    return await interaction.reply("Olá mestre.");
+
+    const deferReply = await interaction.deferReply();
+
+    return await deferReply.edit("Olá mestre.");
 }

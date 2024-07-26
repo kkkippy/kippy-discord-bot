@@ -48,8 +48,9 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     const user     = interaction.options.getUser("usuario") as User;
 
     const author = interaction.user;
-
     const guild = interaction.guild as Guild;
+
+    const deferReply = await interaction.deferReply();
 
     try
     {
@@ -57,11 +58,12 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
 
         await Mute(member, duration, reason);
 
-        await interaction.reply(`O usuário ${user} (${user.id}) foi silenciado em **${guild.name}** por ${duration} horas.`);
+        await deferReply.edit(`O usuário ${user} (${user.id}) foi silenciado em **${guild.name}** por ${duration} horas.`);
 
         await SendPunishmentLog(`O membro ${member} (${member.id}) foi **silenciado** por ${author} (${author.id}) de **${guild.name}** pelo motivo: **${reason}**`);
     } catch (e)
     {
-        await interaction.reply(`Não foi possível silenciar o usuário ${user} (${user.id}).\n${e}.`).catch(console.error);
+        await deferReply.edit(`Não foi possível silenciar o usuário ${user} (${user.id}).\n${e}.`).catch(console.error);
+        console.error(e);
     }
 }
