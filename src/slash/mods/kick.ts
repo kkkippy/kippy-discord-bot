@@ -45,15 +45,18 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     const author = interaction.member as GuildMember;
     const guild = interaction.guild as Guild;
     
+    const deferReply = await interaction.deferReply();
+
     try
     {
         const member = await guild.members.fetch(user.id);
 
         await Kick(member, author, reason);
 
-        await interaction.reply(`O membro ${user} (${user.id}) foi expulso de **${guild.name}**.`);
+        await deferReply.edit(`O membro ${user} (${user.id}) foi expulso de **${guild.name}**.`);
     } catch (e)
     {
-        await interaction.reply(`Não foi possível expulsar o usuário ${user} (${user.id}).\n${e}.`).catch(console.error);
+        await deferReply.edit(`Não foi possível expulsar o usuário ${user} (${user.id}).\n${e}.`).catch(console.error);
+        console.error(e);
     }
 }

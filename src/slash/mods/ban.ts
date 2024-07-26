@@ -35,18 +35,16 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     const author = interaction.member as GuildMember;
     const guild = interaction.guild as Guild;
     
+    const deferReply = await interaction.deferReply();
+
     try
     {
-        const member = await guild.members.fetch(user.id);
-
-        if (member) await member.send({ embeds: [ /* Colocar o embed aqui */ ] });
-        
         await Ban(user, author, reason);
 
-        await interaction.reply(`O usuário ${user} (${user.id}) foi banido de **${guild.name}**.`);
+        await deferReply.edit(`O usuário ${user} (${user.id}) foi banido de **${guild.name}**.`);
     } catch (e)
     {
-
-        await interaction.reply(`Não foi possível banir o usuário ${user} (${user.id}).\n${e}.`).catch(console.error);
+        await deferReply.edit(`Não foi possível banir o usuário ${user} (${user.id}).\n${e}.`).catch(console.error);
+        console.error(e);
     }
 }

@@ -16,9 +16,9 @@ async function Ban (
 
     const member = await guild.members.fetch(user.id);
 
-    if (member && member.bannable) await member.send({ embeds: [ /* Colocar o embed aqui */ ] }).catch(console.error);
+    if (member && member.bannable) await member.send({ content: "Oi" }).catch(console.error);
 
-    await SendPunishmentLog(`O membro ${member} (${member.id}) foi **expulso** por ${author} (${author.id}) de **${guild.name}** pelo motivo: **${reason}**`);
+    await SendPunishmentLog(`O membro ${member} (${member.id}) foi **banido** por ${author} (${author.id}) de **${guild.name}** pelo motivo: **${reason}**`);
 
     await guild.members.ban(user, { reason });
 }
