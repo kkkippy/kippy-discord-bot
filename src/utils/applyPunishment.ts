@@ -20,11 +20,11 @@ async function Ban (
 
     const banEmbed = await BuildBanEmbed(author, guild, reason);
 
-    if (member && member.bannable) await member.send({ embeds: [ banEmbed ] }).catch(console.error);
+    if (member && member.bannable) member.send({ embeds: [ banEmbed ] }).catch(console.error);
 
     await SendPunishmentLog(`O ${member ? "membro" : "usuário"} ${user} (${user.id}) foi **banido** por ${author} (${author.id}) de **${guild.name}** pelo motivo: **${reason}**`);
 
-    await guild.members.ban(user, { reason });
+    guild.members.ban(user, { reason });
 }
 
 async function Unban (

@@ -1,12 +1,12 @@
 import {
     ChatInputCommandInteraction,
-    Guild,
-    GuildMember,
     SlashCommandBuilder,
+    Guild,
     User
 } from "discord.js";
 
 import { Kick } from "../../utils/applyPunishment";
+import { isStaff } from "../../utils/isStaff";
 import { roles } from "../../data/ids.json";
 
 export const data = new SlashCommandBuilder()
@@ -40,6 +40,11 @@ export const execute = async (interaction: ChatInputCommandInteraction) => {
     const guild = interaction.guild as Guild;
     
     const deferReply = await interaction.deferReply();
+
+    if (
+        await isStaff(user.id) &&
+        !interaction.memberPermissions?.has("Administrator")
+    ) return deferReply.edit(`Está tentando banir seu colega de trabalho? 🤨`);
 
     try
     {
