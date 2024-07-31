@@ -1,8 +1,18 @@
 {
     "pelo": "amor de deus, não liguem pra isso KKKKKKKKKKKK",
     
+    "adminRules": {
+        "title": "Regras administrativas",
+        "fields": [
+            {
+                "name": "bora",
+                "value": "bill"
+            }
+        ]
+    },
+
     "generalRules": {
-        "title": "casca de bala",
+        "title": "Regras gerais",
         "description": "ze da manga",
         "color": 0,
         "footer": {

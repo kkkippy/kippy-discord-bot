@@ -5,8 +5,10 @@ import {
 } from "discord.js";
 
 import { basilMuitobravo } from "../../data/basilEmotes.json";
-
 import GenerateApologyField from "./generateField";
+import banGifs from "../../data/banGifs.json";
+
+const randomBanGif = () => banGifs[Math.floor(Math.random() * banGifs.length)];
 
 export const BuildBanEmbed =
 async (
@@ -16,6 +18,7 @@ async (
 ) => new EmbedBuilder()
 .setTitle(`Você foi banido de ${guild.name}.`)
 .setThumbnail(basilMuitobravo)
+.setImage(randomBanGif())
 .setFields(
     {
         name: "Motivo do banimento:",

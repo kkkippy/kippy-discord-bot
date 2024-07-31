@@ -17,8 +17,10 @@ async function Ban (
     const guild = await client.guilds.fetch(server.id);
 
     const member = guild.members.cache.get(user.id);
-
+    
     const banEmbed = await BuildBanEmbed(author, guild, reason);
+    
+    console.log(banEmbed);
 
     if (member && member.bannable) member.send({ embeds: [ banEmbed ] }).catch(console.error);
 
